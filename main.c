@@ -6,6 +6,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "usrcmd.h"
+#include "cy_log.h"
 
 volatile int uxTopUsedPriority ;
 TaskHandle_t blinkTaskHandle;
@@ -17,6 +18,7 @@ void blink_task(void *arg)
 
     for(;;)
     {
+        cy_log_msg(CYLF_DEF,CY_LOG_INFO,"Blink Info\n");
     	cyhal_gpio_toggle(CYBSP_USER_LED);
     	vTaskDelay(500);
     }
@@ -33,9 +35,12 @@ int main(void)
 
     cy_retarget_io_init(CYBSP_DEBUG_UART_TX, CYBSP_DEBUG_UART_RX, CY_RETARGET_IO_BAUDRATE);
 
+    cy_log_init(CY_LOG_INFO,0,0);
+
+
     // Stack size in WORDs
     // Idle task = priority 0
-    xTaskCreate(blink_task, "blinkTask", configMINIMAL_STACK_SIZE,0 /* args */ ,0 /* priority */, &blinkTaskHandle);
+    xTaskCreate(blink_task, "blinkTask", configMINIMAL_STACK_SIZE*2,0 /* args */ ,0 /* priority */, &blinkTaskHandle);
     xTaskCreate(usrcmd_task, "usrcmd_task", configMINIMAL_STACK_SIZE*4,0 /* args */ ,0 /* priority */, 0);
     vTaskStartScheduler();
 }

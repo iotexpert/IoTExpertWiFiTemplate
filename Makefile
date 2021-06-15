@@ -35,7 +35,7 @@
 TARGET=CY8CKIT-062S2-43012
 
 # Name of application (used to derive name of final linked file).
-APPNAME=MTBShellTemplate
+APPNAME=IoTExpertWiFiTemplate
 # Name of toolchain to use. Options include:
 #
 # GCC_ARM -- GCC 7.2.1, provided with ModusToolbox IDE
