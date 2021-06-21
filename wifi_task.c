@@ -91,7 +91,6 @@ void wifi_task(void *arg)
         switch(msg.cmd)
         {
             case WIFI_CMD_ENABLE:
-                printf("Received wifi enable message\n");
                 wifi_enable((cy_wcm_interface_t)msg.arg0);
             break;
 
