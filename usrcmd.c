@@ -43,6 +43,8 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include "wifi_task.h"
+
 static ntshell_t ntshell;
 
 typedef int (*USRCMDFUNC)(int argc, char **argv);
@@ -57,6 +59,8 @@ static int usrcmd_pargs(int argc, char **argv);
 static int usrcmd_list(int argc, char **argv);
 #endif
 #endif
+static int usrcmd_net(int argc, char **argv);
+
 
 typedef struct {
     char *cmd;
@@ -74,6 +78,7 @@ static const cmd_table_t cmdlist[] = {
     { "tasks","print the list of RTOS Tasks", usrcmd_list},
 #endif
 #endif
+    { "net","net [help,enable]",usrcmd_net},
 };
 
 
@@ -184,3 +189,28 @@ static int usrcmd_list(int argc,char **argv)
 }
 #endif
 #endif
+
+
+static int usrcmd_net(int argc, char **argv)
+{
+    if(argc == 1 || strcmp("help",argv[1]) == 0)
+    {
+        printf("net [help,enable,connect,disconnect,mdns,scan,ping,lookup]\n");
+
+        printf("%-35s %s\n","net enable","Enable the WiFi Driver & load the WiFi Firmware");
+
+        return 0;
+    }
+
+    if(strcmp("enable",argv[1])==0)
+    {
+            if(argc == 2)
+                wifi_cmd_enable("STA");
+            else
+                wifi_cmd_enable(argv[2]);        
+            return 0;
+    }
+
+    return 0;
+}
+

@@ -1,3 +1,6 @@
+deps/locking_commit.log
+
+.vscode/
 # ModusToolbox ignore everything in the libs/ folder (except *.lib files for compatibility with ModusToolbox # 2.0 tools)
 libs/*
 !libs/*.lib
